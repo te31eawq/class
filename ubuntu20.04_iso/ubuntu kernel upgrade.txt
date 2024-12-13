@@ -1,0 +1,28 @@
+-. Ubuntu 20.04 Host 커널 빌드 (HDD 약27GB 필요)
+  https://www.kernel.org  현재버젼 Kernel: 5.15.0, 설치버전 5.19.9 
+$ mkdir ~/kernel_ubuntu ; cd kernel_ubuntu
+$ wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.19.9.tar.xz
+$ tar xvf linux-5.19.9.tar.xz
+$ cd linux-5.19.9
+$ cp /boot/config-5.15.0-105-generic .config
+$ sudo apt install build-essential libncurses5-dev libssh-dev bison flex libelf-dev dwarves zstd
+$ make menuconfig			   
+-*- Cryptographic API  --->          // 이동 후 제일 아래(인증 문자열 제거)
+ Certificates for signature checking  --->   //선택, 아래 문자열 제거
+ (debian/canonical-certs.pem) Additional X.509 keys for default system key 
+ (debian/canonical-revoked-certs.pem) X.509 도 없애기 
+ ()  Additional X.509 keys for default system keyring
+
+ (debian/canonical-revoked-certs.pem) X.509 certificates to be preloaded into the system blacklist key 
+ ()    X.509 certificates to be preloaded into the system blacklist key
+   수정 후 Exit 선택 후 저장/종료
+$ make bzImage –j4 ; make modules -j4       //kernel : 20분, modules :58분
+$ sudo make modules_install 
+$ cd /lib/modules/5.19.9
+$ sudo find . -name *.ko -exec strip --strip-unneeded {} \;
+참고 : initramfs 생성 명령 $ sudo update-initramfs –c –k 5.19.9
+    $ cd  ~/kernel_ubuntu/linux-5.19.9		   //커널홈 디렉토리  
+$ sudo make install
+$ sudo reboot                        //재부팅시 ESC키 grub 부트로드 메뉴 
+$ uname  -a                         //커널 버전 및 빌드 시간 확인 업그레이드완료 
+     Linux pi00 6.1.77-v7l+ #2 SMP Mon Apr 29 13:20:56 KST 2024 armv7l GNU/Linux
