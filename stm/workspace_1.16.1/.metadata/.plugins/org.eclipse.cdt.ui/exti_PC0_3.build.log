@@ -1,0 +1,10 @@
+10:48:42 **** Build of configuration Debug for project exti_PC0_3 ****
+make -j16 all 
+arm-none-eabi-size  exti_PC0_3.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13388	    104	   1984	  15476	   3c74	exti_PC0_3.elf
+Finished building: default.size.stdout
+ 
+
+10:48:43 Build Finished. 0 errors, 0 warnings. (took 282ms)
+

@@ -1,0 +1,10 @@
+10:48:47 **** Build of configuration Debug for project tim3_1ms_pwm_ch1 ****
+make -j16 all 
+arm-none-eabi-size  tim3_1ms_pwm_ch1.elf 
+   text	   data	    bss	    dec	    hex	filename
+  17804	    104	   2072	  19980	   4e0c	tim3_1ms_pwm_ch1.elf
+Finished building: default.size.stdout
+ 
+
+10:48:47 Build Finished. 0 errors, 0 warnings. (took 179ms)
+
