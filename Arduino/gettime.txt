@@ -1,0 +1,38 @@
+	else if(!strcmp(msg_info->to,"GETTIME"))
+	{
+		sleep(1);
+		getlocaltime(msg_info->msg);
+		write(msg_info->fd, msg_info->msg, strlen(msg_info->msg));
+	}
+============================================================
+void  getlocaltime(char * buf)
+{
+	struct tm *t;
+	time_t tt;
+	char wday[7][4] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+	tt = time(NULL);
+	if(errno == EFAULT)
+		perror("time()");
+	t = localtime(&tt);
+	sprintf(buf,"[GETTIME]%02d.%02d.%02d %02d:%02d:%02d %s",t->tm_year+1900-2000,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min,t->tm_sec,wday[t->tm_wday]);
+	return;
+}
+
+
+====================
+라즈베리파이에서
+hcitool scan 으로 자기 iot 찾기
+
+bluetoothctl
+
+[bluetooth]# default-agent
+[bluetooth]# scan on
+
+pair 자기iot주소
+
+scan off
+
+devices Paired (페어 되어있는지 확인)
+iot08 98:DA:60:02:B6:AE
+
+iot_client_bluetooth.c 안에 주석 되어있는거 //char dest 요 부분에 자기꺼 98:DA:60:02:B6:AE 넣고 주석 풀기
