@@ -1,0 +1,5 @@
+1733097885533	Delete resource 'lcd_clock_test/Debug/i2c_dth11_clcd.elf'
+1733098122201	Delete resource 'lcd_clock_test/Debug/lcd_clock_test.elf'
+1733098149817	Delete resource 'lcd_clock_test/lcd_clock_test.launch'
+1733120600194	Delete resource 'lcd_clock_test/Core/Src/dht.c'
+1733120603891	Delete resource 'lcd_clock_test/Core/Inc/dht.h'

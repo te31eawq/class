@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="send"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="send"/>
+			<item value="sendBuf"/>
+			<item value="bluetooth_Event"/>
+			<item value="9600"/>
+			<item value="btData"/>
+			<item value="LD"/>
+			<item value="base_start"/>
+			<item value="base"/>
+			<item value="MOTOR"/>
+			<item value="HAL_GPIO_EXTI_Callback"/>
+			<item value="&#x09;  int current_BTN_State = HAL_GPIO_ReadPin(LD2_GPIO_Port, LD2_Pin);"/>
+			<item value="printf"/>
+			<item value="clcd"/>
+			<item value="htim"/>
+			<item value="tim"/>
+		</list>
+		<list key="replacehistory">
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1296"/>
+		<item key="DIALOG_Y_ORIGIN" value="196"/>
+		<item key="DIALOG_WIDTH" value="322"/>
+		<item key="DIALOG_HEIGHT" value="391"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>

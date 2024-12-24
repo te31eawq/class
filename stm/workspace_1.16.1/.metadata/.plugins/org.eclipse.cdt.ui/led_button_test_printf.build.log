@@ -1,0 +1,10 @@
+10:48:43 **** Build of configuration Debug for project led_button_test_printf ****
+make -j16 all 
+arm-none-eabi-size  led_button_test_printf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  12808	    104	   1976	  14888	   3a28	led_button_test_printf.elf
+Finished building: default.size.stdout
+ 
+
+10:48:44 Build Finished. 0 errors, 0 warnings. (took 182ms)
+

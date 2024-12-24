@@ -1,0 +1,10 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:nucleo_f411re_uart2_printf_uart6_wifi Debug (1),org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:nucleo_f411re_uart2_printf_uart6_wifi Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:project (1),org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:tim3_1ms_pwm_ch1,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:i2c_dth11_clcd Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:nucleo_f411re_uart2_printf_uart6_bt Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:exti_PC0_3
+eclipse.preferences.version=1
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:exti_PC0_3/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:exti_PC0_3/activeLaunchTarget=null\:---
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:i2c_dth11_clcd\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:i2c_dth11_clcd\ Debug/activeLaunchTarget=null\:---
+org.eclipse.launchbar.core.descriptorType.default\:New_configuration/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

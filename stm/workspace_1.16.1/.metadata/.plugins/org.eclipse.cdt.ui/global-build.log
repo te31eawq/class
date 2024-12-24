@@ -1,0 +1,57 @@
+09:15:34 **** Incremental Build of configuration Debug for project lcd_clock_test ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clock_set':
+../Core/Src/main.c:541:73: warning: comparison with string literal results in unspecified behavior [-Waddress]
+  541 |                                 setalarmtime->apm = ((setalarmtime->apm == "AM") ? "PM" : "AM");
+      |                                                                         ^~
+../Core/Src/main.c:563:65: warning: comparison with string literal results in unspecified behavior [-Waddress]
+  563 |                                 dateTime->apm = ((dateTime->apm == "AM") ? "PM" : "AM");
+      |                                                                 ^~
+../Core/Src/main.c: In function 'clock_calc':
+../Core/Src/main.c:698:73: warning: comparison with string literal results in unspecified behavior [-Waddress]
+  698 |                                         dateTime->apm = ((dateTime->apm == "AM") ? "PM" : "AM");
+      |                                                                         ^~
+arm-none-eabi-gcc -o "lcd_clock_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\iot19\STM32CubeIDE\workspace_1.16.1\lcd_clock_test\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lcd_clock_test.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: lcd_clock_test.elf
+ 
+arm-none-eabi-size  lcd_clock_test.elf 
+arm-none-eabi-objdump -h -S lcd_clock_test.elf  > "lcd_clock_test.list"
+   text	   data	    bss	    dec	    hex	filename
+  34888	    508	   2524	  37920	   9420	lcd_clock_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: lcd_clock_test.list
+ 
+09:15:36 **** Incremental Build of configuration Debug for project lcd_clock_test ****
+make -j16 all 
+arm-none-eabi-size  lcd_clock_test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  34888	    508	   2524	  37920	   9420	lcd_clock_test.elf
+Finished building: default.size.stdout
+ 
+09:16:10 **** Incremental Build of configuration Debug for project lcd_clock_test ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clock_set':
+../Core/Src/main.c:541:73: warning: comparison with string literal results in unspecified behavior [-Waddress]
+  541 |                                 setalarmtime->apm = ((setalarmtime->apm == "AM") ? "PM" : "AM");
+      |                                                                         ^~
+../Core/Src/main.c:563:65: warning: comparison with string literal results in unspecified behavior [-Waddress]
+  563 |                                 dateTime->apm = ((dateTime->apm == "AM") ? "PM" : "AM");
+      |                                                                 ^~
+../Core/Src/main.c: In function 'clock_calc':
+../Core/Src/main.c:698:73: warning: comparison with string literal results in unspecified behavior [-Waddress]
+  698 |                                         dateTime->apm = ((dateTime->apm == "AM") ? "PM" : "AM");
+      |                                                                         ^~
+arm-none-eabi-gcc -o "lcd_clock_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\iot19\STM32CubeIDE\workspace_1.16.1\lcd_clock_test\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lcd_clock_test.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: lcd_clock_test.elf
+ 
+arm-none-eabi-size  lcd_clock_test.elf 
+arm-none-eabi-objdump -h -S lcd_clock_test.elf  > "lcd_clock_test.list"
+   text	   data	    bss	    dec	    hex	filename
+  34888	    512	   2520	  37920	   9420	lcd_clock_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: lcd_clock_test.list
+ 

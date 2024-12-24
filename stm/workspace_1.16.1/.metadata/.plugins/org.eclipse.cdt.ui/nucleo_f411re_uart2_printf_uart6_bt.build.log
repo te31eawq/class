@@ -1,0 +1,10 @@
+10:48:44 **** Build of configuration Debug for project nucleo_f411re_uart2_printf_uart6_bt ****
+make -j16 all 
+arm-none-eabi-size  nucleo_f411re_uart2_printf_uart6_bt.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18152	    104	   2168	  20424	   4fc8	nucleo_f411re_uart2_printf_uart6_bt.elf
+Finished building: default.size.stdout
+ 
+
+10:48:44 Build Finished. 0 errors, 0 warnings. (took 180ms)
+

@@ -1,0 +1,10 @@
+10:48:43 **** Incremental Build of configuration Debug for project i2c_dth11_clcd ****
+make -j16 all 
+arm-none-eabi-size  i2c_dth11_clcd.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18024	    104	   2072	  20200	   4ee8	i2c_dth11_clcd.elf
+Finished building: default.size.stdout
+ 
+
+10:48:43 Build Finished. 0 errors, 0 warnings. (took 130ms)
+
