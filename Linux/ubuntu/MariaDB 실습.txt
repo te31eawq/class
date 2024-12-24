@@ -1,0 +1,280 @@
+MariaDB [(none)]> 
+MariaDB [(none)]> exit
+MariaDB [(none)]> show databases;  		#데이터베이스 목록 확인
+MariaDB [(none)]> create database st_db;	#st_db 데이터베이스 생성
+MariaDB [(none)]> show databases;		#생성된 데이터베이스 목록 확인
+MariaDB [(none)]> use st_db;		#사용할 데이터베이스 선택
+MariaDB [(none)]>  grant all privileges on st_db.* to iot@localhost identified by 'pwiot';
+MariaDB [(none)]> exit	# 종료
+MariaDB [(none)]> MariaDB [st_db]> show tables;		#테이블 확인
+MariaDB [st_db]> show tables;		#테이블 확인
+MariaDB [st_db]>
+MariaDB [st_db]> create table st_info (ST_ID int, NAME (20)varchar, DEPT varchar(25)) default charset=utf8;		#테이블생성 필드 포함
+MariaDB [st_db]> show tables;		# 생성된 테이블 목록 확인
+MariaDB [st_db]> create table st_grade (ST_ID int, Linux int, DB int);
+MariaDB [st_db]> show tables;
+MariaDB [st_db]> explain st_info;		#생성된 st_info 테이블 구조 확인
+MariaDB [st_db]> explain st_grade;
+MariaDB [st_db]> alter table st_info modify ST_ID int Not Null;		# ST_ID 기본 키 설정을 위해 Null 허용 안함
+MariaDB [st_db]> alter table st_grade modify ST_ID int Not Null;
+MariaDB [st_db]> alter table st_info add constraint pk_stinfo primary key (ST_ID);	# # ST_ID 기본 키 설정
+MariaDB [st_db]> alter table st_grade add constraint pk_stinfo primary key (ST_ID);
+MariaDB [st_db]> explain st_info		#설정확인
+MariaDB [st_db]> insert into st_info values (201801, '이길동', 'Game');	#레코드 입력
+MariaDB [st_db]> insert into st_info values (201803, '홍길동', 'Game');
+MariaDB [st_db]> select * from st_info;	#레코드 검색
+MariaDB [st_db]> insert into st_grade values (201801, 90, 80); 		#레코드 입력
+MariaDB [st_db]> insert into st_grade values (201802, 70, 95);
+MariaDB [st_db]> insert into st_grade values (201803, 80, 65);
+MariaDB [st_db]> select * from st_grade;		#레코드 검색
+MariaDB [st_db]> select NAME, DEPT from st_info where ST_ID=201801;   #학번이 201801인 학생의 이름과 학과 선택
+MariaDB [st_db]> select Linux from st_grade where ST_ID=201801;		#학번이 201801인 학생의 Linux 성적 선택
+MariaDB [st_db]> select st_info.NAME, st_info.DEPT, st_grade.DB from st_info, st_grade where st_info.ST_ID=201801 and st_grade.ST_ID=201801;
+MariaDB [st_db]> update st_grade set DB=90 where ST_ID=201801;	#데이터 갱신
+MariaDB [st_db]> select * from st_grade where ST_ID=201801;
+MariaDB [st_db]> delete from st_info where ST_ID=201803;		#레코드 삭제
+MariaDB [st_db]> select * from st_info;
+MariaDB [st_db]> insert into st_info values (201803, '홍길동', 'Game');         #레코드 추가
+MariaDB [st_db]> select * from st_info;
+MariaDB [st_db]> show tables;		#테이블 확인
+
+
+1. MariaDB 설치 및 실행 확인
+ubuntu@ubuntu00:~$ sudo apt install mariadb-server mariadb-client -y
+ubuntu@ubuntu00:~$ sudo systemctl status mariadb.service
+2. MariaDB 사용하기
+ubuntu@ubuntu00:~$ sudo mysql
+MariaDB [(none)]> 
+3. MariaDB 종료하기
+MariaDB [(none)]> exit
+
+MariaDB [(none)]> show databases;  		#데이터베이스 목록 확인
+MariaDB [(none)]> create database st_db;	#st_db 데이터베이스 생성
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [(none)]> show databases;		#생성된 데이터베이스 목록 확인
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| st_db              |
++--------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [(none)]> use st_db;		#사용할 데이터베이스 선택
+Database changed
+MariaDB [st_db]>
+
+MariaDB [st_db]> create table st_info (ST_ID int, NAME (20)varchar, DEPT varchar(25)) default charset=utf8;		#테이블생성 필드 포함
+Query OK, 0 rows affected (0.008 sec)
+
+MariaDB [st_db]> show tables;		# 생성된 테이블 목록 확인
++-----------------+	
+| Tables_in_st_db |
++-----------------+
+| st_info         |
++-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [st_db]> create table st_grade (ST_ID int, Linux int, DB int);
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [st_db]> show tables;
++-----------------+
+| Tables_in_st_db |
++-----------------+
+| st_grade        |
+| st_info         |
++-----------------+
+2 rows in set (0.000 sec)
+
+MariaDB [st_db]> explain st_info;		#생성된 st_info 테이블 구조 확인
+
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ST_ID | int(11)     | YES  |     | NULL    |       |
+| NAME  | varchar(20) | YES  |     | NULL    |       |
+| DEPT  | varchar(25) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.001 sec)
+
+MariaDB [st_db]> explain st_grade;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| ST_ID | int(11) | YES  |     | NULL    |       |
+| Linux | int(11) | YES  |     | NULL    |       |
+| DB    | int(11) | YES  |     | NULL    |       |
++-------+---------+------+-----+---------+-------+
+3 rows in set (0.001 sec)
+
+MariaDB [st_db]> alter table st_info modify ST_ID int Not Null;		# ST_ID 기본 키 설정을 위해 Null 허용 안함
+Query OK, 0 rows affected (0.014 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [st_db]> alter table st_grade modify ST_ID int Not Null;
+Query OK, 0 rows affected (0.013 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [st_db]> alter table st_info add constraint pk_stinfo primary key (ST_ID);	# # ST_ID 기본 키 설정
+Query OK, 0 rows affected, 1 warning (0.012 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+MariaDB [st_db]> alter table st_grade add constraint pk_stinfo primary key (ST_ID);
+Query OK, 0 rows affected, 1 warning (0.014 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+MariaDB [st_db]> explain st_info		#설정확인
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ST_ID | int(11)     | NO   | PRI | NULL    |       |
+| NAME  | varchar(20) | YES  |     | NULL    |       |
+| DEPT  | varchar(25) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.001 sec)
+
+MariaDB [st_db]> insert into st_info values (201801, '이길동', 'Game');	#레코드 입력
+Query OK, 1 row affected (0.006 sec)
+
+ariaDB [st_db]> insert into st_info values (201802, '김길동', 'Computer');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [st_db]> insert into st_info values (201803, '홍길동', 'Game');
+Query OK, 1 row affected (0.005 sec)
+
+
+MariaDB [st_db]> select * from st_info;	#레코드 검색
++--------+-----------+----------+
+| ST_ID  | NAME      | DEPT     |
++--------+-----------+----------+
+| 201801 | 이길동    | Game     |
+| 201802 | 김길동    | Computer |
+| 201803 | 홍길동    | Game     |
++--------+-----------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [st_db]> insert into st_grade values (201801, 90, 80); 		#레코드 입력
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [st_db]> insert into st_grade values (201802, 70, 95);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [st_db]> insert into st_grade values (201803, 80, 65);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [st_db]> select * from st_grade;		#레코드 검색
++--------+-------+------+
+| ST_ID  | Linux | DB   |
++--------+-------+------+
+| 201801 |    90 |   80 |
+| 201802 |    70 |   95 |
+| 201803 |    80 |   65 |
++--------+-------+------+
+3 rows in set (0.000 sec)
+
+MariaDB [st_db]> select NAME, DEPT from st_info where ST_ID=201801;   #학번이 201801인 학생의 이름과 학과 선택
++-----------+------+
+| NAME      | DEPT |
++-----------+------+
+| 이길동    | Game |
++-----------+------+
+1 row in set (0.000 sec)
+
+MariaDB [st_db]> select Linux from st_grade where ST_ID=201801;		#학번이 201801인 학생의 Linux 성적 선택
++-------+
+| Linux |
++-------+
+|    90 |
++-------+
+1 row in set (0.000 sec)
+
+MariaDB [st_db]> select st_info.NAME, st_info.DEPT, st_grade.DB from st_info, st_grade where st_info.ST_ID=201801 and st_grade.ST_ID=201801;
++-----------+------+------+
+| NAME      | DEPT | DB   |
++-----------+------+------+
+| 이길동    | Game |   80 |
++-----------+------+------+
+1 row in set (0.000 sec)
+
+
+
+MariaDB [st_db]> update st_grade set DB=90 where ST_ID=201801;	#데이터 갱신
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [st_db]> select * from st_grade where ST_ID=201801;
++--------+-------+------+
+| ST_ID  | Linux | DB   |
++--------+-------+------+
+| 201801 |    90 |   90 |
++--------+-------+------+
+1 row in set (0.000 sec)
+	
+MariaDB [st_db]> delete from st_info where ST_ID=201803;		#레코드 삭제
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [st_db]> select * from st_info;
++--------+-----------+----------+
+| ST_ID  | NAME      | DEPT     |
++--------+-----------+----------+
+| 201801 | 이길동    | Game     |
+| 201802 | 김길동    | Computer |
++--------+-----------+----------+
+2 rows in set (0.000 sec)
+
+MariaDB [st_db]> insert into st_info values (201803, '홍길동', 'Game');         #레코드 추가
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [st_db]> select * from st_info;
++--------+-----------+----------+
+| ST_ID  | NAME      | DEPT     |
++--------+-----------+----------+
+| 201801 | 이길동    | Game     |
+| 201802 | 김길동    | Computer |
+| 201803 | 홍길동    | Game     |
++--------+-----------+----------+
+3 rows in set (0.000 sec)
+
+=============계정 추가=============
+
+iotdb 접근 계정 추가 ( 계정 : iot, 암호 : pwiot )
+MariaDB [(none)]>  grant all privileges on st_db.* to iot@localhost identified by 'pwiot';
+
+MariaDB [(none)]> exit	# 종료
+
+
+ubuntu@ubuntu00:~$ mysql -u iot -p		#생성된 계정과 암호를 사용하여 접속
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 39
+Server version: 10.3.39-MariaDB-0ubuntu0.20.04.2 Ubuntu 20.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> MariaDB [st_db]> show tables;		#테이블 확인
+
+
+=======st_db_query_c 예제 실습==========
+st_db_query_c$ sudo apt install libmysqlclient-dev	# sql c 라이브러리 설치
+
+$ sudo vi /etc/mysql/mariadb.conf.d/50-server.cnf  	#bind-address 주석
+
+$ sudo systemctl restart mariadb.service		#mariadb 재시작
+
+$ vi st_db.c					#23라인 id, passwd  수정
+=========================================
+     if (mysql_real_connect(con, "127.0.0.1", "iot", "pwiot",
+=========================================
+st_db_query_c$ gcc st_db.c -o st_db -lmysqlclient
+
+st_db_query_c$ ./st_db
+201801 이길동 Game
+201802 김길동 Computer
+201803 홍길동 Game
+

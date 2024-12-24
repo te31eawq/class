@@ -1,0 +1,3 @@
+ubuntu@ubuntu00:~$ sudo apt remove lightdm gdm3
+ubuntu@ubuntu00:~$ sudo autoremove
+ubuntu@ubuntu00:~$ sudo apt install lightdm gdm3  ==>  설치시 메뉴에서  lightdm 선택
