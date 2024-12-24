@@ -1,0 +1,14 @@
+u-boot.lds ENTRY(_start)
+arch/arm/lib/vectors.S _start
+arch/arm/cpu/armv7/start.S reset
+arch/arm/lib/crt0.S _main
+common/board_r.c board_init_r
+common/board_r.c init_sequence_r
+common/board_r.c run_main_loop 
+common/main.c main_loop
+common/autoboot.c autoboot_command
+common/cli.c  run_command_list
+common/cli_simple.c cli_simple_run_command_list
+common/cli_simple.c cli_simple_run_command
+common/command.c cmd_process 
+common/command.c cmd_call --> result = (cmdtp->cmd)(cmdtp, flag, argc, argv);
