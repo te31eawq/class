@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 
 CONFIG += c++11
 
@@ -19,16 +19,21 @@ SOURCES += \
     keyled.cpp \
     main.cpp \
     mainwidget.cpp \
-    tab1devcontrol.cpp
+    socketclient.cpp \
+    tab1devcontrol.cpp \
+    tab2socketclient.cpp
 
 HEADERS += \
     keyled.h \
     mainwidget.h \
-    tab1devcontrol.h
+    socketclient.h \
+    tab1devcontrol.h \
+    tab2socketclient.h
 
 FORMS += \
     mainwidget.ui \
-    tab1devcontrol.ui
+    tab1devcontrol.ui \
+    tab2socketclient.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

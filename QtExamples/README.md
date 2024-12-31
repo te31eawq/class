@@ -1,6 +1,17 @@
 # Qt
+### 순서
+1. [예제1](#예제1)
+2. [tab1](#tab1)
+    - [dial 값에 따라 led 빛내기](#dial-값에-따라-led-빛내기)
+    - [TimerStart 버튼](#timerstart-버튼)
+    - [Timer중에 ComboBox 변경](#timer중에-combobox-변경)
+    - [checkbox 와 led](#checkbox-와-led)
+3. [tab2](#tab2)
+    - [tab 시작 바꾸기](#tab-시작-바꾸기)
+    - [서버 소켓 연결](#서버-소켓-연결)
 
-### 예제 1 HelloWorld 출력
+### 예제1
+#### HelloWorld 출력
 ```cpp
 #include <QApplication>
 #include <QLabel>
@@ -304,8 +315,11 @@ int main(int argc, char** argv)
 ```
 ![text](images/messagebox.png)
 ---
-### 예제 9 dial 값에 따라 led 빛내기
+## Tab1
 
+### dial 값에 따라 led 빛내기
+
+## 테스트
 
 
 ```cpp
@@ -403,4 +417,107 @@ void Tab1DevControl::on_pCBtimerValue_currentTextChanged(const QString &arg1)
 ### grid layout 안에 checkbox
 
 ![text](images/gridlayout_checkbox.png)
+
+
+### checkbox 와 led
+
+```cpp
+//헤더파일
+
+
+
+//
+arrCnt = sizeof(pQCheckBoxArray)/sizeof(pQCheckBoxArray[0]);
+pQButtonGroup = new QButtonGroup(this);
+for(int i=0;i<ui->pGridLayoutKey->rowCount();i++)
+{
+    for(int j=0;j<ui->pGridLayoutKey->columnCount();j++)
+    {
+        pQCheckBoxArray[itemCnt--] = dynamic_cast<QCheckBox*>(ui->pGridLayoutKey->itemAtPosition(i,j)->widget());
+    }
+}
+for(int i =0;i<8;i++)
+{
+    pQButtonGroup->addButton(pQCheckBoxArray[i],0x01 << i);
+}
+pQButtonGroup->setExclusive(false);
+connect(pQButtonGroup, SIGNAL(buttonClicked(int)), this, SLOT(keyCheckKeyboardSlot(int)));
+connect(pKeyLed,SIGNAL(updateKeyDateSig(int)),this,SLOT(keyCheckBoxSlot(int)));
+
+
+void Tab1DevControl::keyCheckBoxSlot(int key)
+{
+    lcdData ^= key;
+    ui->pLcdNumberKey->display(lcdData);
+    pKeyLed->writeLedData(lcdData);
+
+    for(int i=0;i<arrCnt;i++)
+    {
+        if(key == 0x01 << i)
+        {
+            if(pQCheckBoxArray[i]->isChecked())
+                pQCheckBoxArray[i]->setChecked(false);
+            else
+                pQCheckBoxArray[i]->setChecked(true);
+        }
+    }
+}
+
+void Tab1DevControl::keyCheckKeyboardSlot(int keyno)
+{
+    lcdData ^= keyno;
+    ui->pLcdNumberKey->display(lcdData);
+    pKeyLed->writeLedData(lcdData);
+}
+
+
+```
+## Tab2
+### tab 시작 바꾸기
+```cpp
+ui->pTabWidget->setCurrentIndex(1); // tab 시작부분 변경
+```
+
+
+### 서버 소켓 연결
+```cpp
+// tab2socketclient.h 파일
+#include "socketclient.h"
+
+SocketClient *pSocketCLient;
+```
+```cpp
+// tab2socketclient.cpp 파일
+tab2socketclient::tab2socketclient(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::tab2socketclient)
+{
+    ui->setupUi(this);
+    pSocketCLient = new SocketClient(this);
+}
+
+tab2socketclient::~tab2socketclient()
+{
+    delete ui;
+}
+
+void tab2socketclient::on_pPBservConnect_clicked(bool checked)
+{
+    bool bOK;
+    if(checked)
+    {
+        pSocketCLient->slotConnectToServer(bOK); // slotConnectToServer(&bool)
+        if(bOK)
+        {
+            ui->pPBservConnect->setText("서버 연결");
+        }
+    }
+}
+
+```
+
+### 
+
+
+
 

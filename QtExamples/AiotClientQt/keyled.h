@@ -20,6 +20,7 @@ private:
     QSocketNotifier * pKeyLedNotifier;
 private slots:
     void readKeyData(int);
+public slots:
     void writeLedData(int);
 signals:
     void updateKeydataSig(int);
