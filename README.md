@@ -8,12 +8,12 @@
     - #### [드라이버에서 버튼으로 LED제어](./C/avr/730class1/730class1/)
     - #### [Periph의 GPIO로 드라이버 제어](./C/avr/730classpractice/730classpractice/)
     - #### [버튼이 한번만 인식되게 처리](./C/avr/730lastgpio/730lastgpio/)
-2. TIMER
+2. TIMER :alarm_clock:
     - #### [타이머 인터럽트를 이용한 FND](./C/avr/0801time1/731time1/)
     - #### [타이머 비교 인터럽트(CTC)를 이용한 LCD](./C/avr/0801timeclock/731time1/)
-3. LCD 사용
+3. LCD 사용 :tv:
     - #### [LCD 설정](./C/avr/0802lcdclass/0802lcdclass/)
-4. 부저 사용
+4. 부저 사용 :sound:
     - #### [BUZZER 설정](./C/avr/0805Buzzeroriginal/0805Buzzer/)
 5. I2C
     - #### [I2C 설정](./C/avr/0805I2C/0805I2C/)
@@ -29,6 +29,9 @@
 - #### [OpenCV를 이용한 이미지 배열 색상 설정 및 그리드 생성 예제](./C++/Color/0812Pink/C++_Lecture_05_GUGUDANFromImage/)
 - #### [OpenCV를 이용한 사각형 및 교차선 그리기](./C++/Color/0812Pink/C++_Lecture_05_PointerFromImage/)
 - #### [포인터와 참조를 이용한 변수 값 교환 (swap 함수)](./C++/Color/0812Pink/C++_Lecture_05_PointerSwap/)
+- #### [대각선 그리기 프로그램 - OpenCV 활용](./C++/Color/0812Pink/C++_Lecture_06_DrawPixels/)
+- #### [구구단 함수들 - 다양한 방식으로 구구단 출력](./C++/Color/0812Pink/C++_Lecture_07_Function_GUGUDAN/)
+
 
 
 

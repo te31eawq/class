@@ -17,6 +17,7 @@
     - [Tab3 ui 적용](#tab3-ui-적용)
     - [버튼으로 LAMP ON/OFF](#버튼으로-lamp-onoff)
     - [Background 색상 적용](#background-색상-적용)
+5. [Tab4](#tab4)
 
 ### 예제1
 #### HelloWorld 출력
@@ -323,11 +324,11 @@ int main(int argc, char** argv)
 ```
 ![text](images/messagebox.png)
 ---
-## Tab1
+## **Tab1**
 
 ### dial 값에 따라 led 빛내기
 
-## 테스트
+### 테스트
 
 
 ```cpp
@@ -699,7 +700,7 @@ signals:
     void ledWriteSig(int);
 ```
 
-## Tab3
+## **Tab3**
 
 ### Tab3 ui 적용
 - MainWidget.h
@@ -917,3 +918,9 @@ void Tab3ControlPannel::tab3RecvDataSlot(QString recvData)
 }
 
 ```
+<img src="./images/coloricon.png" width="430" height="300" alt="text">
+
+---
+
+## **Tab4**
+### 차트
