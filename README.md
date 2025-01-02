@@ -4,7 +4,7 @@
 - ### [가변저항 제어](./Arduino/examples/pwmchangeresist/)
 # [C 언어](./C/avr/)
 ### Driver와 Periph
-1. LED와 버튼
+1. LED와 버튼 :rotating_light:
     - #### [드라이버에서 버튼으로 LED제어](./C/avr/730class1/730class1/)
     - #### [Periph의 GPIO로 드라이버 제어](./C/avr/730classpractice/730classpractice/)
     - #### [버튼이 한번만 인식되게 처리](./C/avr/730lastgpio/730lastgpio/)

@@ -16,6 +16,7 @@
 4. [Tab3](#tab3)
     - [Tab3 ui 적용](#tab3-ui-적용)
     - [버튼으로 LAMP ON/OFF](#버튼으로-lamp-onoff)
+    - [Background 색상 적용](#background-색상-적용)
 
 ### 예제1
 #### HelloWorld 출력
@@ -865,4 +866,54 @@ signals:
 
 ![text](./images/LAMPONOFF.png)
 
-### 
+### Background 색상 적용
+- tab3controlpannel.h
+```cpp
+#include <QPalette>
+
+private:
+    Ui::Tab3ControlPannel *ui;
+    QPalette paletteColorOn;            // 추가
+    QPalette paletteColorOff;           // 추가
+```
+
+- tab3controlpannel.cpp
+```cpp
+Tab3ControlPannel::Tab3ControlPannel(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Tab3ControlPannel)
+{
+    ui->setupUi(this);
+    paletteColorOn.setColor(ui->pPBLamp->backgroundRole(), QColor(255,0,0));    // 추가
+    paletteColorOff.setColor(ui->pPBLamp->backgroundRole(), QColor(0,0,255));   // 추가
+    ui->pPBLamp->setPalette(paletteColorOff);                                   // 추가
+    ui->pPBPlug->setPalette(paletteColorOff);                                   // 추가
+}
+
+void Tab3ControlPannel::tab3RecvDataSlot(QString recvData)
+{
+    QStringList qList = recvData.split("@");        //@CJW_QT@LAMPON
+    if(qList[2] == "LAMPON")
+    {
+        ui->pPBLamp->setIcon(QIcon(":/images/Image/light_on.png"));
+        ui->pPBLamp->setPalette(paletteColorOn);                    // 이미지 색상 On/Off 추가
+
+    }
+    else if(qList[2] == "LAMPOFF")
+    {
+        ui->pPBLamp->setIcon(QIcon(":/images/Image/light_off.png"));
+        ui->pPBLamp->setPalette(paletteColorOff);                   // Lamp OFF
+    }
+    else if(qList[2] == "GASON")
+    {
+        ui->pPBPlug->setIcon(QIcon(":/images/Image/plug_on.png"));
+        ui->pPBPlug->setPalette(paletteColorOn);                    // Plug ON
+    }
+    else if(qList[2] == "GASOFF")
+    {
+        ui->pPBPlug->setIcon(QIcon(":/images/Image/plug_off.png"));
+        ui->pPBPlug->setPalette(paletteColorOff);                   // Plug OFF
+    }
+}
+
+```
