@@ -924,3 +924,20 @@ void Tab3ControlPannel::tab3RecvDataSlot(QString recvData)
 
 ## **Tab4**
 ### 차트
+
+- tab4chartplot.h
+```cpp
+// 추가
+#include <QLineSeries>
+#include <QChartView>
+#include <QDateTimeAxis>
+#include <QDate>
+#include <QTime>
+#include <QDebug>           
+
+QT_CHARTS_USE_NAMESPACE
+namespace Ui {
+class Tab4ChartPlot;
+}
+```
+
