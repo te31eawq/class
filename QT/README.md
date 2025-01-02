@@ -1,17 +1,21 @@
 # Qt
 ### 순서
 1. [예제1](#예제1)
-2. [tab1](#tab1)
+2. [Tab1](#tab1)
     - [dial 값에 따라 led 빛내기](#dial-값에-따라-led-빛내기)
     - [TimerStart 버튼](#timerstart-버튼)
     - [Timer중에 ComboBox 변경](#timer중에-combobox-변경)
     - [checkbox 와 led](#checkbox-와-led)
-3. [tab2](#tab2)
+3. [Tab2](#tab2)
     - [tab 시작 바꾸기](#tab-시작-바꾸기)
     - [서버 소켓 연결](#서버-소켓-연결)
     - [메세지 송신](#메세지-송신)
     - [메세지 분리](#메세지-분리)
     - [LED 적용](#led-적용)
+    - [SETDIAL](#setdial-구현)
+4. [Tab3](#tab3)
+    - [Tab3 ui 적용](#tab3-ui-적용)
+    - [버튼으로 LAMP ON/OFF](#버튼으로-lamp-onoff)
 
 ### 예제1
 #### HelloWorld 출력
@@ -693,3 +697,172 @@ signals:
     void setDialValueSig(int);
     void ledWriteSig(int);
 ```
+
+## Tab3
+
+### Tab3 ui 적용
+- MainWidget.h
+```cpp
+class MainWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    MainWidget(QWidget *parent = nullptr);
+    ~MainWidget();
+private:
+    Ui::MainWidget *ui;
+    Tab1DevControl *pTab1DevControl;
+    tab2socketclient *pTab2SocketClient;
+    Tab3ControlPannel *pTab3ControlPannel; // 추가
+};
+#endif // MAINWIDGET_H
+```
+- MainWidget.cpp
+```cpp
+pTab3ControlPannel = new Tab3ControlPannel(ui->pTab3);
+ui->pTab3->setLayout(pTab3ControlPannel->layout());
+
+ui->pTabWidget->setCurrentIndex(2); // Tab3 에서 시작
+```
+
+- ### icon 사진 적용
+    - Tab3controlPannel.ui
+
+```
+New File -> Qt(Resource) -> Add Prefix에서 준비한 이미지들 넣기
+```
+1. #### Resource 적용 
+    
+    ![text](./images/resourcesfolder.png)
+
+
+2. #### Tab3ControlPannel.ui에서 pixmap에 사진 넣기
+    ![text](./images/pixmap.png)
+
+3. #### 버튼에 icon 적용
+
+    ![text](./images/pbicon.png)
+
+
+### 버튼으로 LAMP ON/OFF
+
+- tab3controlpannel.cpp
+```cpp
+void Tab3ControlPannel::on_pPBLamp_clicked(bool checked)
+{
+    if(checked)
+    {
+        emit socketSendDataSig("[HM_CON]LAMPON");
+    }
+    else
+    {
+        emit socketSendDataSig("[HM_CON]LAMPOFF");
+    }
+}
+
+void Tab3ControlPannel::on_pPBPlug_clicked(bool checked)
+{
+    if(checked)
+    {
+        emit socketSendDataSig("[HM_CON]GASON");
+    }
+    else
+    {
+        emit socketSendDataSig("[HM_CON]GASOFF");
+    }
+}
+
+---------------------------------------------------------------------
+
+void Tab3ControlPannel::tab3RecvDataSlot(QString recvData)
+{
+    QStringList qList = recvData.split("@");        //@CJW_QT@LAMPON
+    if(qList[2] == "LAMPON")
+    {
+        ui->pPBLamp->setIcon(QIcon(":/images/Image/light_on.png"));
+    }
+    else if(qList[2] == "LAMPOFF")
+    {
+        ui->pPBLamp->setIcon(QIcon(":/images/Image/light_off.png"));
+    }
+    else if(qList[2] == "GASON")
+    {
+        ui->pPBPlug->setIcon(QIcon(":/images/Image/plug_on.png"));
+    }
+    else if(qList[2] == "GASOFF")
+    {
+        ui->pPBPlug->setIcon(QIcon(":/images/Image/plug_off.png"));
+    }
+}
+```
+- tab3controlpannel.h
+```cpp
+signals:
+    void socketSendDataSig(QString);        // 추가
+private slots:
+    void on_pPBLamp_clicked(bool checked);
+    void tab3RecvDataSlot(QString);         // 추가
+    void on_pPBPlug_clicked(bool checked);
+```
+
+- MainWidget.cpp
+```cpp
+connect(pTab3ControlPannel,SIGNAL(socketSendDataSig(QString)),pTab2SocketClient->getpSocketClient(),SLOT(slotSocketSendData(QString)));
+// 클릭시 메세지보내고 -> 메세지 처리하도록 함(Socket.cpp 함수)
+connect(pTab2SocketClient,SIGNAL(tab3RecvDataSig(QString)),pTab3ControlPannel,SLOT(tab3RecvDataSlot(QString)));
+// 서버에서 받은 메세지 -> 아이콘 바꾸기
+```
+
+- Tab2SocketClient.cpp
+```cpp
+void tab2socketclient::socketRecvUpdateSlot(QString strRecvData)
+{
+    QTime time = QTime::currentTime();
+    QString strTime = time.toString();
+    strRecvData.chop(1);
+    strTime = strTime + " " + strRecvData;
+    ui->pTErecvData->append(strTime);
+    strRecvData.replace("[","@");
+    strRecvData.replace("]","@");
+    QStringList qList = strRecvData.split("@");
+    if(qList[2].indexOf("LED") == 0)
+    {
+        bool bOk;
+        int ledNo = qList[3].toInt(&bOk,16);
+        if(bOk)
+            emit ledWriteSig(ledNo);
+    }
+    else if(qList[2].indexOf("SETDIAL") == 0)
+    {
+        int dialNo = qList[3].toInt();
+        emit setDialValueSig(dialNo);
+    }
+    else if((qList[2].indexOf("LAMP") == 0) || (qList[2].indexOf("GAS") == 0))
+    {
+        emit tab3RecvDataSig(strRecvData);
+    }
+}
+
+
+SocketClient * tab2socketclient::getpSocketClient()
+{
+    return pSocketCLient;
+}
+
+```
+- Tab2SocketClient.h
+```cpp
+public:
+    explicit tab2socketclient(QWidget *parent = nullptr);
+    ~tab2socketclient();
+    SocketClient * getpSocketClient();  // 추가
+signals:
+    void ledWriteSig(int);
+    void setDialValueSig(int);
+    void tab3RecvDataSig(QString);  // 추가
+```
+
+![text](./images/LAMPONOFF.png)
+
+### 

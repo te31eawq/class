@@ -74,19 +74,67 @@
 
 4. **`UART0_sendString(char *str)`**:
    - 문자열을 하나씩 **UART0_Transmit**을 사용하여 전송합니다.
-
+    ```c
+    void UART0_sendString(char *str)
+    {
+        for(int i=0;str[i];i++)
+        {
+            UART0_Transmit(str[i]);
+        }
+    }
+    ```
 5. **`UART0_init()`**:
    - UART0을 초기화합니다.
    - 수신(`RXEN0`)과 송신(`TXEN0`) 기능을 활성화하고, **2배 속도 모드**(`U2X0`)로 설정합니다.
    - **9600 baud rate**로 설정합니다.
    - **수신 인터럽트**(`RXCIE0`)를 활성화하여, 수신 시 인터럽트가 발생하도록 합니다.
+   ```c
+   void UART0_init()
+    {
+        UCSR0B |= (1<<RXEN0) | (1<<TXEN0); //UCSR1B, UCSR0B 중에 선택한거임
+        UCSR0A |= (1<<U2X0);//2배 모드
+        
+        UBRR0L = 207; // 16mhz
+        UCSR0B |= (1<<RXCIE0); // 1byte 수신
+    }
+    ```
 
 6. **`UART_execute()`**:
    - "TEST"라는 문자열을 송신합니다.
    - 수신 플래그가 설정되면, 수신된 데이터를 읽고 출력합니다.
+   ```c
+   void UART_execute()
+    {
+        UART0_sendString("TEST\n");
+        if(UART0_GetRxFlag())
+        {
+            UART0_clearRxFlag();
+            UART0_sendString("Receive Data : ");
+            UART0_sendString((char *)UART0_readRxBuff());
+        }
+        _delay_ms(1000);
+    }
+    ```
 
 7. **수신 플래그 관련 함수들**:
    - `UART0_clearRxFlag()`, `UART0_setRxFlag()`, `UART0_GetRxFlag()`: **수신 플래그**를 관리하여 수신된 데이터를 처리할 때 필요한 신호를 설정하고 확인합니다.
+   ```c
+   void UART0_clearRxFlag()
+    {
+        uart0Rxflag = 0;
+    }
+
+
+    void UART0_setRxFlag()
+    {
+        uart0Rxflag = 1;
+    }
+
+    uint8_t UART0_GetRxFlag()
+    {
+        return uart0Rxflag;
+    }
+    ```
 
 ### 3. `main.c` 파일
 

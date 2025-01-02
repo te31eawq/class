@@ -20,7 +20,18 @@
 6. UART
     - #### [UART 설정](./C/avr/0806UART/0806UART/)
     
-# [C++](./C++/)
+# [C++](./C++/Color/0812Pink/)
+- #### [OpenCV를 이용한 이미지 불러오기 및 출력](./C++/Color/0812Pink/C++_lecture_00/)
+- #### [기본 데이터 타입, 포인터, 배열, 벡터, 구조체 사용](./C++/Color/0812Pink/C++_lecture_01/)
+- #### [배열과 벡터를 활용한 반복문과 조건문 예제](./C++/Color/0812Pink/C++_lecture_02_Forif/)
+- #### [구구단 출력 예제 (정렬된 출력)](./C++/Color/0812Pink/C++_lecture_03_GUGUDAN/)
+- #### [배열과 포인터를 사용한 합계 계산 예제](./C++/Color/0812Pink/C++_Lecture_04_Pointer/)
+- #### [OpenCV를 이용한 이미지 배열 색상 설정 및 그리드 생성 예제](./C++/Color/0812Pink/C++_Lecture_05_GUGUDANFromImage/)
+- #### [OpenCV를 이용한 사각형 및 교차선 그리기](./C++/Color/0812Pink/C++_Lecture_05_PointerFromImage/)
+- #### [포인터와 참조를 이용한 변수 값 교환 (swap 함수)](./C++/Color/0812Pink/C++_Lecture_05_PointerSwap/)
+
+
+
 
 # [Linux](./Linux/)
 
