@@ -11,7 +11,15 @@
 2. TIMER
     - #### [타이머 인터럽트를 이용한 FND](./C/avr/0801time1/731time1/)
     - #### [타이머 비교 인터럽트(CTC)를 이용한 LCD](./C/avr/0801timeclock/731time1/)
-
+3. LCD 사용
+    - #### [LCD 설정](./C/avr/0802lcdclass/0802lcdclass/)
+4. 부저 사용
+    - #### [BUZZER 설정](./C/avr/0805Buzzeroriginal/0805Buzzer/)
+5. I2C
+    - #### [I2C 설정](./C/avr/0805I2C/0805I2C/)
+6. UART
+    - #### [UART 설정](./C/avr/0806UART/0806UART/)
+    
 # [C++](./C++/)
 
 # [Linux](./Linux/)
@@ -24,4 +32,4 @@
 
 # [TCP](./TCPIP_Src/)
 
-# [QT](./Qt/)
+# [QT](./QT/)

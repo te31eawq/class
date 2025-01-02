@@ -602,7 +602,7 @@ void tab2socketclient::socketRecvUpdateSlot(QString strRecvData)
     }
 }
 ```
-### LED 적용
+## LED 적용
 ```cpp
 // mainwidget에 connect 추가
 connect(pTab2SocketClient,SIGNAL(ledWriteSig(int)), pTab1DevControl->pKeyLed,SLOT(wirteLedData(int)));
@@ -622,4 +622,74 @@ KeyLed * Tab1DevControl::getpKeyLed()
 {
     return pKeyLed;
 }
+```
+
+## SETDIAL 구현
+- Tab1DevControl.h
+```cpp
+#include <QDial>
+
+QDial * getpDial();
+
+signals:
+    void LedDataSend(int);
+```
+- Tab1DevControl.cpp
+```cpp
+void Tab1DevControl::setValueDialSlot()
+{
+    int dialValue = ui->pDialLed->value();
+    if(dialValue >= ui->pDialLed->maximum())
+        dialValue = 0;
+    else
+        dialValue++;
+    ui->pDialLed->setValue(dialValue);
+    emit
+        LedDataSend(dialValue);
+}
+
+QDial * Tab1DevControl::getpDial()
+{
+    return ui->pDialLed;
+}
+```
+- Tab2socketclient.cpp
+```cpp
+void tab2socketclient::socketRecvUpdateSlot(QString strRecvData)
+{
+    QTime time = QTime::currentTime();
+    QString strTime = time.toString();
+    strRecvData.chop(1);
+    strTime = strTime + " " + strRecvData;
+    ui->pTErecvData->append(strTime);
+    strRecvData.replace("[","@");
+    strRecvData.replace("]","@");
+    QStringList qList = strRecvData.split("@");
+    if(qList[2].indexOf("LED") == 0)
+    {
+        bool bOk;
+        int ledNo = qList[3].toInt(&bOk,16);
+        if(bOk)
+            emit ledWriteSig(ledNo);
+    }
+    else if(qList[2].indexOf("SETDIAL") == 0) // SETDIAL 메세지 처리
+    {
+        int dialNo = qList[3].toInt();
+        emit setDialValueSig(dialNo);
+    }
+}
+
+void tab2socketclient::slotSocketSendDataDial(int dialValue) // dial값 보내기
+{
+    QString strValue = "[CJW_PI]SETDIAL@"+QString::number(dialValue);
+    pSocketCLient->slotSocketSendData(strValue);
+}
+```
+- Tab2socketclient.h
+```cpp
+private slots:
+    void slotSocketSendDataDial(int);
+signals:
+    void setDialValueSig(int);
+    void ledWriteSig(int);
 ```

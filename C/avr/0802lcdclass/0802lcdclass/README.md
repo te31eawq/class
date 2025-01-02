@@ -1,5 +1,5 @@
 
-## LCD Init
+## LCD Init (LCD 설정)
 ```c
 void LCDinit()
 {
@@ -19,7 +19,7 @@ void LCDinit()
 	LCDwritecmddata(displayon);
 }
 ```
-### LCD 처리
+### LCD 처리 (LCD Init을 위한 함수들)
 ```c
 void Gpioinit()
 {
@@ -61,6 +61,12 @@ void LCDenablelow()
 	Gpio_writepin(&PORTB, 7, 0);
 	_delay_ms(1);
 }
+
+```
+---
+## LCD 문자 표시
+```c
+
 void LCDwritebyte(uint8_t data)
 {
 	// 8 bit를 PORTC로 data 값을 내보내기
@@ -92,6 +98,7 @@ void LCDwritestring(char *str)
 		LCDwritechardata(str[i]);
 	}
 }
+
 void LCDgotoxy(uint8_t row, uint8_t col)
 {
 	col%= 16; row %=2;

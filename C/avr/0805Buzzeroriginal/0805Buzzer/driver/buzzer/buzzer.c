@@ -15,7 +15,7 @@ void Buzzer_makehz(uint8_t strength, uint16_t hertz)
 	if (hertz < 100) hertz = 100;
 	else if(hertz > 5000) hertz = 5000;
 	BUZZER_ICR = (250000/  hertz)-1;
-	OCR3A = BUZZER_ICR / 4;				//Duty Cycle 50%
+	OCR3A = BUZZER_ICR / 4;				//Duty Cycle 25%
 }
 
 void Buzzer_init()
