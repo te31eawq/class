@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWidget</class>
- <widget class="QWidget" name="MainWidget">
+ <class>mainwidget</class>
+ <widget class="QWidget" name="mainwidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>430</height>
+    <width>600</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWidget</string>
+   <string>mainwidget</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="pTabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
-     <widget class="QWidget" name="pTab1">
+     <widget class="QWidget" name="ptab1">
       <attribute name="title">
        <string>Tab 1</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="pTab2">
+     <widget class="QWidget" name="ptab2">
       <attribute name="title">
        <string>Tab 2</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="pTab3">
+     <widget class="QWidget" name="ptab3">
       <attribute name="title">
        <string>Tab 3</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="ptab4">
+      <attribute name="title">
+       <string>Tab 4</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="ptab5">
+      <attribute name="title">
+       <string>Tab5</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="ptab6">
+      <attribute name="title">
+       <string>Tab6</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="ptab7">
+      <attribute name="title">
+       <string>Tab7</string>
       </attribute>
      </widget>
     </widget>

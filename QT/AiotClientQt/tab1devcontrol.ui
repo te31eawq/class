@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>410</height>
+    <width>659</width>
+    <height>521</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,4,1,4">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,1">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,0">
      <item>
       <widget class="QPushButton" name="pPBtimerStart">
        <property name="text">
@@ -53,6 +53,11 @@
          <string>1000</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>2000</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -65,20 +70,14 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1">
      <item>
       <widget class="QDial" name="pDialLed">
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
        <property name="maximum">
         <number>255</number>
-       </property>
-       <property name="tracking">
-        <bool>true</bool>
-       </property>
-       <property name="invertedAppearance">
-        <bool>false</bool>
-       </property>
-       <property name="invertedControls">
-        <bool>false</bool>
        </property>
        <property name="wrapping">
         <bool>true</bool>
@@ -113,28 +112,17 @@
        <property name="value">
         <number>0</number>
        </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <layout class="QGridLayout" name="pGridLayoutKey">
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="pCBKey3">
-         <property name="text">
-          <string>3</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QCheckBox" name="pCBKey1">
-         <property name="text">
-          <string>1</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="pCBKey4">
          <property name="text">
@@ -142,10 +130,24 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="pCBKey3">
+         <property name="text">
+          <string>3</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="2">
         <widget class="QCheckBox" name="pCBKey2">
          <property name="text">
           <string>2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QCheckBox" name="pCBKey1">
+         <property name="text">
+          <string>1</string>
          </property>
         </widget>
        </item>
@@ -202,12 +204,12 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>250</y>
+     <x>164</x>
+     <y>244</y>
     </hint>
     <hint type="destinationlabel">
-     <x>690</x>
-     <y>256</y>
+     <x>387</x>
+     <y>242</y>
     </hint>
    </hints>
   </connection>
@@ -218,12 +220,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>203</x>
-     <y>221</y>
+     <x>243</x>
+     <y>340</y>
     </hint>
     <hint type="destinationlabel">
-     <x>216</x>
-     <y>349</y>
+     <x>254</x>
+     <y>405</y>
     </hint>
    </hints>
   </connection>

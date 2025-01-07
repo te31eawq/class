@@ -3,8 +3,9 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QtDebug>
 #include <QButtonGroup>
-#include <QDebug>
+#include <QDial>
 #include "keyled.h"
 
 namespace Ui {
@@ -18,6 +19,11 @@ class Tab1DevControl : public QWidget
 public:
     explicit Tab1DevControl(QWidget *parent = nullptr);
     ~Tab1DevControl();
+    KeyLed* getpKeyLed();
+    QDial* getpQDial();
+
+signals:
+    void timeoutDialSignal(int);
 
 private slots:
     void on_pPBQuit_clicked();
@@ -25,17 +31,17 @@ private slots:
     void setValueDialSlot();
     void on_pCBtimerValue_currentTextChanged(const QString &arg1);
     void keyCheckBoxSlot(int);
-    void keyCheckKeyboardSlot(int);
+    void keyCheckBoxKeyboardSlot(int);
 
 private:
     Ui::Tab1DevControl *ui;
     KeyLed *pKeyLed;
     QTimer *pQTimer;
     QButtonGroup *pQButtonGroup;
-    QCheckBox * pQCheckBoxArray[8];
-    int lcdData= 0;
+    QCheckBox *pQCheckBoxArray[8];
     int arrCnt;
     int itemCnt;
+    int lcdKeydata;
 };
 
 #endif // TAB1DEVCONTROL_H

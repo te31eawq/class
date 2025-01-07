@@ -9,9 +9,9 @@ KeyLed::KeyLed(QWidget *parent) :
     {
         QMessageBox::information(this,"open","open fail : /dev/ledkey_dev");
     }
-    keyledFd = pFile->handle();
-    pKeyLedNotifier = new QSocketNotifier(keyledFd,QSocketNotifier::Read,this);
-    connect(pKeyLedNotifier,SIGNAL(activated(int)),this,SLOT(readKeyData(int)));
+    keyledFd = pFile->handle(); //file descripter value return
+    pKeyLedNotifier = new QSocketNotifier(keyledFd,QSocketNotifier::Read,this); //QSocketNorifier::Read => static value
+    connect(pKeyLedNotifier,SIGNAL(activated(int)),this,SLOT(readKeyData(int)));    //Read Event accur call Slot
     writeLedData(0);
 }
 void KeyLed::readKeyData(int)

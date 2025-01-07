@@ -18,6 +18,7 @@ SocketClient::SocketClient(QWidget *parent, Qt::WindowFlags flags)
 void SocketClient::slotConnectToServer(bool& ok){
     //서버 연결 요청
     QString strHostIp;
+    strClientID = QInputDialog::getText(this,"ClientID","Input Client ID:",QLineEdit::Normal,LOGID,&ok);
 //	tcpSocket.connectToHost(QHostAddress::LocalHost, 5000);
     strHostIp = QInputDialog::getText(this,"HostIP","Input Server IP:",QLineEdit::Normal,SERVERIP,&ok);
     if(ok)
@@ -30,8 +31,8 @@ void SocketClient::slotConnectToServer(bool& ok){
 }
 void SocketClient::slotConnectServer()
 {
-    QString Str = "["+LOGID+":"+LOGPW+"]";
-    QByteArray byteStr = Str.toLocal8Bit();
+    QString Str = "["+strClientID+":"+LOGPW+"]";
+    QByteArray byteStr = Str.toLocal8Bit();     // korean: window 2byte, linux(UTF-8) 3byte
     pQTcpSocket->write(byteStr);
 }
 

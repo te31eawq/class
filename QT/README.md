@@ -18,7 +18,8 @@
     - [버튼으로 LAMP ON/OFF](#버튼으로-lamp-onoff)
     - [Background 색상 적용](#background-색상-적용)
 5. [Tab4](#tab4)
-
+6. [Tab5]
+7. [Tab6](#tab6)
 ### 예제1
 #### HelloWorld 출력
 ```cpp
@@ -941,3 +942,93 @@ class Tab4ChartPlot;
 }
 ```
 
+## **Tab6**
+### 웹사이트
+
+- TestWebview.pro
+```cpp
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webenginewidgets // 추가
+```
+
+- mainwidget.h
+```cpp
+#ifndef MAINWIDGET_H
+#define MAINWIDGET_H
+
+#include <QWidget>
+#include <QWebEngineView>   //추가
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWidget; }
+QT_END_NAMESPACE
+
+class MainWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    MainWidget(QWidget *parent = nullptr);
+    ~MainWidget();
+
+private:
+    Ui::MainWidget *ui;
+    QWebEngineView *pQWebEngineView1_1;
+    QWebEngineView *pQWebEngineView1_2;
+    QWebEngineView *pQWebEngineView1_3;
+    QWebEngineView *pQWebEngineView1_4;
+    QWebEngineView *pQWebEngineView2_1;
+};
+#endif // MAINWIDGET_H
+```
+- mainwidget.cpp
+```cpp
+#include "mainwidget.h"
+#include "ui_mainwidget.h"
+
+MainWidget::MainWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::MainWidget)
+{
+    ui->setupUi(this);
+
+    pQWebEngineView1_1 = new QWebEngineView(this);
+    pQWebEngineView1_1->load(QUrl(QStringLiteral("http://10.10.14.60:8080/?action=stream")));
+    ui->verticalLayout1->addWidget(pQWebEngineView1_1);
+
+    pQWebEngineView1_2 = new QWebEngineView(this);
+    pQWebEngineView1_2->load(QUrl(QStringLiteral("http://10.10.14.48:8080/?action=stream")));
+    ui->verticalLayout2->addWidget(pQWebEngineView1_2);
+
+    pQWebEngineView1_3 = new QWebEngineView(this);
+    pQWebEngineView1_3->load(QUrl(QStringLiteral("http://10.10.14.48:8080/?action=stream")));
+    ui->verticalLayout3->addWidget(pQWebEngineView1_3);
+
+    pQWebEngineView1_4 = new QWebEngineView(this);
+    pQWebEngineView1_4->load(QUrl(QStringLiteral("http://10.10.14.48:8080/?action=stream")));
+    ui->verticalLayout4->addWidget(pQWebEngineView1_4);
+
+    pQWebEngineView2_1 = new QWebEngineView(this);
+    pQWebEngineView2_1->load(QUrl(QStringLiteral("http://www.naver.com")));
+    ui->verticalLayout5->addWidget(pQWebEngineView2_1);
+}
+
+MainWidget::~MainWidget()
+{
+    delete ui;
+}
+```
+
+![text](./images/webcam.png)
+
+### 라즈베리파이 비밀번호 걸기
+```
+cd mjpg-streamer-master/mjpg-streamer-experimental
+
+vi start.sh
+-----------
+30 ./mjpg_streamer -i "./input_uvc.so" -o "./output_http.so -w ./www"
+이거를
+./mjpg_streamer -i "./input_uvc.so" -o "./output_http.so -w ./www -c user:passwd"
+
+끝에 -c ID:PASSWD 붙여주기
+```

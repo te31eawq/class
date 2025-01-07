@@ -6,36 +6,36 @@ Tab1DevControl::Tab1DevControl(QWidget *parent) :
     ui(new Ui::Tab1DevControl)
 {
     ui->setupUi(this);
-    arrCnt = sizeof(pQCheckBoxArray)/sizeof(pQCheckBoxArray[0]);
-    itemCnt = arrCnt-1;
+    arrCnt = ui->pGridLayoutKey->rowCount() * ui->pGridLayoutKey->columnCount();
+    itemCnt = arrCnt - 1;
+    lcdKeydata = 0;
     pKeyLed = new KeyLed(this);
     pQTimer = new QTimer(this);
-
-    pQButtonGroup = new QButtonGroup(this);
-    for(int i=0;i<ui->pGridLayoutKey->rowCount();i++)
+	
+	pQButtonGroup = new QButtonGroup(this);
+    for(int i=0;i < ui->pGridLayoutKey->rowCount();i++)
     {
         for(int j=0;j<ui->pGridLayoutKey->columnCount();j++)
         {
             pQCheckBoxArray[itemCnt--] = dynamic_cast<QCheckBox*>(ui->pGridLayoutKey->itemAtPosition(i,j)->widget());
         }
     }
-    for(int i =0;i<8;i++)
+    for(int i=0;i<arrCnt;i++)
     {
-        pQButtonGroup->addButton(pQCheckBoxArray[i],0x01 << i);
+        pQButtonGroup->addButton(pQCheckBoxArray[i],i+1);
     }
     pQButtonGroup->setExclusive(false);
-    connect(pQButtonGroup, SIGNAL(buttonClicked(int)), this, SLOT(keyCheckKeyboardSlot(int)));
+    connect(pQButtonGroup, SIGNAL(buttonClicked(int)), this,SLOT(keyCheckBoxKeyboardSlot(int)));
+
     connect(pQTimer, SIGNAL(timeout()), this, SLOT(setValueDialSlot()));
-    connect(ui->pDialLed,SIGNAL(valueChanged(int)),pKeyLed, SLOT(writeLedData(int)));
-    connect(pKeyLed,SIGNAL(updateKeydataSig(int)),this,SLOT(keyCheckBoxSlot(int)));
-
-
+    connect(ui->pDialLed, SIGNAL(valueChanged(int)), pKeyLed, SLOT(writeLedData(int)));
+    connect(pKeyLed, SIGNAL(updateKeydataSig(int)), this, SLOT(keyCheckBoxSlot(int)));
+//    connect(pKeyLed, SIGNAL(updateKeydataSig(int)), this, SLOT(writeLedData(int)));
+//    connect(ui->pPBQuit,SIGNAL(clicked()), this, SLOT(on_pPBQuit_clicked()));     // if add in UI sector connect func didn't need.
 }
 
 Tab1DevControl::~Tab1DevControl()
 {
-//    ui->pDialLed->setValue(0);
-    pKeyLed->writeLedData(0);
     delete ui;
 }
 
@@ -54,9 +54,8 @@ void Tab1DevControl::on_pPBtimerStart_clicked(bool checked)
     }
     else
     {
-        ui->pPBtimerStart->setText("TimerStart");
         pQTimer->stop();
-
+        ui->pPBtimerStart->setText("TimerStart");
     }
 }
 
@@ -68,11 +67,13 @@ void Tab1DevControl::setValueDialSlot()
     else
         dialValue++;
     ui->pDialLed->setValue(dialValue);
+    emit timeoutDialSignal(dialValue);
 }
 
-void Tab1DevControl::on_pCBtimerValue_currentTextChanged(const QString &arg1)
+//string is class
+void Tab1DevControl::on_pCBtimerValue_currentTextChanged(const QString &arg1)   //&: reference type, value is address,
 {
-    if(pQTimer->isActive())
+    if(pQTimer->isActive())     // "is~" func is boolean type
     {
         pQTimer->stop();
         pQTimer->start(arg1.toInt());
@@ -82,16 +83,17 @@ void Tab1DevControl::on_pCBtimerValue_currentTextChanged(const QString &arg1)
 void Tab1DevControl::keyCheckBoxSlot(int key)
 {
 //    qDebug() << "key : " << key;
-    lcdData ^= key;
-    ui->pLcdNumberKey->display(lcdData);
-    pKeyLed->writeLedData(lcdData);
+//    static int lcdKeydata = 0;
+    lcdKeydata ^= 0x01 << (key-1);
+    ui->pLcdNumberKey->display(lcdKeydata);
+    if(!pQTimer->isActive())
+        pKeyLed->writeLedData(lcdKeydata);
 
-
-//    QCheckBox *pQCheckBox[8] ={ui->pCBKey1,ui->pCBKey2,ui->pCBKey3,ui->pCBKey4,ui->pCBKey5,ui->pCBKey6,ui->pCBKey7,ui->pCBKey8};
-
-    for(int i=0;i<arrCnt;i++)
+//    QCheckBox *pQCheckBox[8] = {ui->pCBKey1, ui->pCBKey2, ui->pCBKey3, ui->pCBKey4, ui->pCBKey5, ui->pCBKey6, ui->pCBKey7, ui->pCBKey8};
+//    int arrCnt = sizeof(pQCheckBox)/sizeof(pQCheckBox[0]);
+    for(int i=0; i<arrCnt; i++)
     {
-        if(key == 0x01 << i)
+        if(key == i+1)
         {
             if(pQCheckBoxArray[i]->isChecked())
                 pQCheckBoxArray[i]->setChecked(false);
@@ -101,10 +103,19 @@ void Tab1DevControl::keyCheckBoxSlot(int key)
     }
 }
 
-void Tab1DevControl::keyCheckKeyboardSlot(int keyno)
+void Tab1DevControl::keyCheckBoxKeyboardSlot(int key)
 {
-//    qDebug() << "keyno : " << keyno;
-    lcdData ^= keyno;
-    ui->pLcdNumberKey->display(lcdData);
-    pKeyLed->writeLedData(lcdData);
+    lcdKeydata ^= 0x01 << (key-1);
+    ui->pLcdNumberKey->display(lcdKeydata);
+    pKeyLed->writeLedData(lcdKeydata);
+}
+
+KeyLed* Tab1DevControl::getpKeyLed()
+{
+    return pKeyLed;
+}
+
+QDial* Tab1DevControl::getpQDial()
+{
+    return ui->pDialLed;
 }

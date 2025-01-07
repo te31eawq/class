@@ -26,6 +26,7 @@ public:
 	SocketClient(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~SocketClient();
     QTcpSocket * getpQTcpSocket();
+    QString strClientID;
 
 signals:
     void sigSocketRecv(QString);
@@ -33,7 +34,7 @@ signals:
 private slots:
 	void slotSocketReadData();
 	void slotSocketError();
-    void slotConnectServer();
+	void slotConnectServer();
 
 public slots:
     void slotConnectToServer(bool&);

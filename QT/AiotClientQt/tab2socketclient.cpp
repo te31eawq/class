@@ -1,36 +1,108 @@
 #include "tab2socketclient.h"
 #include "ui_tab2socketclient.h"
 
-tab2socketclient::tab2socketclient(QWidget *parent) :
+Tab2SocketClient::Tab2SocketClient(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::tab2socketclient)
+    ui(new Ui::Tab2SocketClient)
 {
     ui->setupUi(this);
-    pSocketCLient = new SocketClient(this);
     ui->pPBsendButton->setEnabled(false);
+    pKeyboard = new Keyboard();
+    pSocketClient = new SocketClient(this);
+    connect(ui->pLErecvId, SIGNAL(selectionChanged()), this, SLOT(keyboardSlot()));
+    connect(ui->pLEsendData, SIGNAL(selectionChanged()), this, SLOT(keyboardSlot()));
+    connect(pSocketClient, SIGNAL(sigSocketRecv(QString)), this, SLOT(socketRecvUpdateSlot(QString)));
 }
 
-tab2socketclient::~tab2socketclient()
+Tab2SocketClient::~Tab2SocketClient()
 {
     delete ui;
 }
 
-void tab2socketclient::on_pPBservConnect_clicked(bool checked)
+void Tab2SocketClient::on_pPBserverConnect_clicked(bool checked)
 {
-    bool bOK;
+    bool bOk;
     if(checked)
     {
-        pSocketCLient->slotConnectToServer(bOK);
-        if(bOK)
+        pSocketClient->slotConnectToServer(bOk);
+        if(bOk)
         {
-            ui->pPBservConnect->setText("서버 해제");
+            ui->pPBserverConnect->setText("서버 해제");
             ui->pPBsendButton->setEnabled(true);
         }
     }
     else
     {
-        pSocketCLient->slotClosedByServer();
-        ui->pPBservConnect->setText("서버 연결");
+        pSocketClient->slotClosedByServer();
+        ui->pPBserverConnect->setText("서버 연결");
         ui->pPBsendButton->setEnabled(false);
     }
 }
+
+void Tab2SocketClient::socketRecvUpdateSlot(QString strRecvData)
+{
+    QTime time = QTime::currentTime();
+    QString strTime = time.toString();
+    strRecvData.chop(1);        //'\n' 문자 제거
+    strTime = strTime + " " + strRecvData;
+    ui->pTErecvData->append(strTime);
+
+    strRecvData.replace("[","@");
+    strRecvData.replace("]","@");
+    QStringList qList = strRecvData.split("@");
+    if(qList[2].indexOf("LED") == 0)
+    {
+        bool bOk;
+        int ledNo = qList[3].toInt(&bOk,16);
+        if(bOk)
+            emit ledWriteSig(ledNo);
+    }
+    else if(qList[2].indexOf("SETDIAL") == 0)
+    {
+        int dialNo = qList[3].toInt();
+        emit setDialValueSig(dialNo);
+    }
+    else if((qList[2].indexOf("LAMP") == 0) || (qList[2].indexOf("GAS") == 0))
+    {
+        emit tab3RecvDataSig(strRecvData);
+    }
+    else if(qList[2].indexOf("SENSOR") == 0)
+    {
+        emit tab4RecvDataSig(strRecvData);
+        emit tab5RecvDataSig(strRecvData);
+    }
+}
+
+void Tab2SocketClient::on_pPBsendButton_clicked()
+{
+    QString strRecvId = ui->pLErecvId->text();
+    QString strSendData = ui->pLEsendData->text();
+    if(!strSendData.isEmpty())
+    {
+        if(strRecvId.isEmpty())
+            strSendData = "[ALLMSG]"+strSendData;
+        else
+            strSendData = "["+strRecvId+"]"+strSendData;
+        pSocketClient->slotSocketSendData(strSendData);
+        ui->pLEsendData->clear();
+    }
+}
+
+void Tab2SocketClient::keyboardSlot()
+{
+    QLineEdit *pQLineEdit = (QLineEdit *)sender();
+    pKeyboard->setLineEdit(pQLineEdit);
+    pKeyboard->show();
+}
+
+void Tab2SocketClient::slotSocketSendDataDial(int dialValue)
+{
+    QString strValue = "[SCM_PI]SETDIAL@"+QString::number(dialValue);
+    pSocketClient->slotSocketSendData(strValue);
+}
+
+SocketClient* Tab2SocketClient::getpSocketClient()
+{
+    return pSocketClient;
+}
+
