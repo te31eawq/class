@@ -1,4 +1,8 @@
-### ubunut에서 
+# 목차
+1. [turtlebot 설치 및 사용법](#ubunut에서-할-것)
+2. [ros에 관해서](#ros)
+
+### ubunut에서 할 것
 $ sudo apt update
 
 $ sudo apt upgrade
@@ -152,28 +156,78 @@ $ vi .bashrc
 $ source .bashrc
 
 ### 이후 turtlebot에서
-$ sudo dpkg --add-architecture armhf  
-
+```
+$ sudo dpkg --add-architecture armhf  ## lock 파일 제거해야함 이상하면
 $ sudo apt-get update  
-
 $ sudo apt-get install libc6:armhf  
 
 $ export OPENCR_PORT=/dev/ttyACM0 
-
 $ export OPENCR_MODEL=burger_noetic  
 
 $ rm -rf ./opencr_update.tar.bz2  
 
 $ wget https://github.com/ROBOTIS-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2   
-
 $ tar -xvf opencr_update.tar.bz2 
-
 $ cd ./opencr_update  
-
 $ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr  
-
+---
 ### ubuntu에서
 $ roscore
 
 ### turtlebot에서
-$ roslaunch turtlebot3_bringup turtlebot3_robot.launch
+$ roslaunch turtlebot3_bringup turtlebot3_robot.launch ## ./bringup.sh로 만들었음
+
+### ubuntu에서
+rqt로 이제 확인할 수 있음 ## roscore 실행한 상태로
+```
+---
+
+### ubuntu에서
+$ vi .bashrc
+```p
+130 export TURTLEBOT3_MODEL=burger
+```
+
+## 카메라
+```
+11. 터틀봇 usb webcam 사용
+
+turtlebot3에서 설치 
+$ sudo apt install ros-noetic-cv-camera
+$ rosrun cv_camera cv_camera_node
+
+ubuntu Master 
+$ rqt_image_view #실행후 /cv_camera/image_raw 선택
+
+slam 또는 navigation 실행 후 좌측 display 창에 
+ Image  topic에  /cv_camera/image_raw  선택 , 
+ Transport Hint에 raw 선택
+```
+
+### slam
+ubuntu
+```
+$ roslaunch turtlebot3_slam turtlebot3_slam.launch
+```
+
+도중에 map 저장
+```
+$ rosrun map_server map_saver -f ~/map
+
+```
+
+### navigate
+```
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+```
+
+## ROS
+### 운영체제 소개
+- #### 범용 컴퓨터
+    - Windows, Linux, MAC
+- 스마트폰
+    - Android, IOS, Windows Phone
+- ROS = Robot Operating System
+
+- ROS는 메타운영체제(Meta-Operation System)이다
+
