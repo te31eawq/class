@@ -36,6 +36,7 @@
     - #### [구구단 함수들 - 다양한 방식으로 구구단 출력](./C++/Color/0812Pink/C++_Lecture_07_Function_GUGUDAN/)
     - #### [C++에서 함수와 함수 포인터 사용 예시](./C++/Color/0812Pink/C++_Lecture_07_Function/)
     - #### [값과 참조, 포인터를 이용한 값 교환](./C++/Color/0812Pink/C++_Lecture_07_Function_Parmas/)
+
 # [Linux](./Linux/)
 - #### [BSP](./Linux/BSP/)
 - #### [ubuntu](./Linux/ubuntu/)
@@ -45,7 +46,12 @@
 
 # [라즈베리파이](./RaspberryPi/)
 
+- #### [u-boot](./RaspberryPi/u-boot/)
+
 # [STM32](./stm/)
+- #### [BlueTooth](./stm/Examples/nucleo_f411re_uart2_printf_uart6_bt/)
+    - #### [dht, lcd](./stm/Examples/nucleo_f411re_uart2_printf_uart6_bt_clcd_dht11/)
+- #### [Wifi](./stm/Examples/nucleo_f411re_uart2_printf_uart6_wifi_tm3_adc2ch/)
 
 # [Device driver](./device_driver/drivers/)
 

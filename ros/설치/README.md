@@ -68,7 +68,8 @@ id : ubuntu
 
 passwd : turtlebot
 
-## $ sudo apt install net-tools
+## 넷툴 설치
+$ sudo apt install net-tools
 
 sudo apt install 패키지설치시 아래 오류 발생시
 Waiting for cache lock: Could not get lock /var/lib/dpkg/lock-frontend
@@ -126,7 +127,7 @@ $ vi .bashrc
 
 ```python
 export ROS_MASTER_URI=http://10.10.14.XX:11311		# XX :ubuntu host 주소
-export ROS_HOSTNAME=10.10.141.120			#라즈베리파이 host wifi 주소
+export ROS_HOSTNAME=10.10.14.108			#라즈베리파이 host wifi 주소
 export TURTLEBOT3_MODEL=burger
 ```
 $ source .bashrc
@@ -169,8 +170,10 @@ $ rm -rf ./opencr_update.tar.bz2
 $ wget https://github.com/ROBOTIS-GIT/OpenCR-Binaries/raw/master/turtlebot3/ROS1/latest/opencr_update.tar.bz2   
 $ tar -xvf opencr_update.tar.bz2 
 $ cd ./opencr_update  
-$ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr  
+$ ./update.sh $OPENCR_PORT $OPENCR_MODEL.opencr 
+
 ---
+
 ### ubuntu에서
 $ roscore
 
