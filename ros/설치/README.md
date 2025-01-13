@@ -16,13 +16,16 @@ $ bash ./install_ros_noetic.sh
 ### SBC 설정
 
 ### SBC 설정(Raspberry Pi) - noetic-raspberry 3B+
+
 이미지 다운로드 및 압축 해제 (ubuntu20.04 사용)
+
 Direct Link : https://www.robotis.com/service/download.php?no=2008
 
 ### Raspberry Pi Imager를 통해 sd카드 write 
 
 ###  sd카드  ubuntu 마운트 후
 ubuntu@ubuntu00:~$ df
+
 /dev/sdb2                     8188896   6243460   1579240  80% /media/ubuntu/writable
 
 ubuntu@ubuntu00:~$ cd /media/ubuntu/writable
