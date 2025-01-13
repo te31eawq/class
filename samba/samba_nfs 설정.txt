@@ -1,14 +1,14 @@
--.ssh server ¼³Ä¡
+-.ssh server ì„¤ì¹˜
 ~$sudo apt update
 ~$sudo apt install openssh-server
-À©µµ¿ìÁî¿¡¼­ putty ¼³Ä¡ 
+ìœˆë„ìš°ì¦ˆì—ì„œ putty ì„¤ì¹˜ 
 
--.»ï¹Ù ¼­¹ö ¼³Á¤
-~$ sudo apt install samba -y		//ÆĞÅ°Áö ¼³Ä¡
-~$ sudo mkdir /srv/samba		//°øÀ¯ µğ·ºÅä¸® setup
-~$ sudo chmod 777 /srv/samba	//µğ·ºÅä¸® Á¢±Ù±ÇÇÑ ¸ğµÎÇã¿ë
-~$ sudo vi /etc/samba/smb.conf	//»ï¹Ù È¯°æ ¼³Á¤
- ¸Ç ³¡¿¡ ¾Æ·¡ ¶óÀÎ Ãß°¡ 
+-.ì‚¼ë°” ì„œë²„ ì„¤ì •
+~$ sudo apt install samba -y		//íŒ¨í‚¤ì§€ ì„¤ì¹˜
+~$ sudo mkdir /srv/samba		//ê³µìœ  ë””ë ‰í† ë¦¬ setup
+~$ sudo chmod 777 /srv/samba	//ë””ë ‰í† ë¦¬ ì ‘ê·¼ê¶Œí•œ ëª¨ë‘í—ˆìš©
+~$ sudo vi /etc/samba/smb.conf	//ì‚¼ë°” í™˜ê²½ ì„¤ì •
+ ë§¨ ëì— ì•„ë˜ ë¼ì¸ ì¶”ê°€ 
 ===============================
 [samba]
    comment = shared folder
@@ -18,15 +18,15 @@
    valid users = ubuntu
    public = yes
 ================================
-~$ sudo smbpasswd -a ubuntu	//Á¢¼Ó °èÁ¤°ú ¾ÏÈ£ ¼³Á¤ 
-~$ sudo service smbd restart 	//»ï¹Ùµ¥¸ó Àç½ÃÀÛ
+~$ sudo smbpasswd -a ubuntu	//ì ‘ì† ê³„ì •ê³¼ ì•”í˜¸ ì„¤ì • 
+~$ sudo service smbd restart 	//ì‚¼ë°”ë°ëª¬ ì¬ì‹œì‘
 
-À©µµ¿ìÁî Å½»ö±â ½ÇÇàÃ¢¿¡¼­
-\\192.168.0.x     			//x:¸®´ª½º ¼­¹ö IP
+ìœˆë„ìš°ì¦ˆ íƒìƒ‰ê¸° ì‹¤í–‰ì°½ì—ì„œ
+\\192.168.0.x     			//x:ë¦¬ëˆ…ìŠ¤ ì„œë²„ IP
 
 
 =================================
-NFS ¼­¹ö ¼³Ä¡ - ubuntu 
+NFS ì„œë²„ ì„¤ì¹˜ - ubuntu 
 ~$sudo apt-get install nfs-common nfs-kernel-server rpcbind
 ~$sudo mkdir /srv/nfs
 ~$sudo chmod 777 /srv/nfs
@@ -38,25 +38,25 @@ NFS ¼­¹ö ¼³Ä¡ - ubuntu
 ~$sudo exportfs
 /srv/nfs        192.168.0.0/24(rw,sync)
 
-NFS ¸¶¿îÆ® (ÆÄÀÏ ÀĞ°í ¾²±â) - raspberryPi
+NFS ë§ˆìš´íŠ¸ (íŒŒì¼ ì½ê³  ì“°ê¸°) - raspberryPi
 ~$sudo mkdir /mnt/ubuntu_nfs
-~$sudo mount -t nfs 10.10.14.28:/srv/nfs /mnt/ubuntu_nfs   //XX:¸®´ª½º IP
+~$sudo mount -t nfs 10.10.14.28:/srv/nfs /mnt/ubuntu_nfs   //XX:ë¦¬ëˆ…ìŠ¤ IP
 
 ~$df
 -------------
 10.10.14.XX:/srv/nfs   78310400 5295104  69014016   8% /mnt/ubuntu_nfs
 -------------
-~$cd /mnt/ubuntu_nfs  ==> 192.168.10.50¼­¹öÀÇ /srv/nfs¿¡ Á¢¼ÓµÊ
+~$cd /mnt/ubuntu_nfs  ==> 192.168.10.50ì„œë²„ì˜ /srv/nfsì— ì ‘ì†ë¨
 
-NFS ¸¶¿îÆ® ÇØÁ¦
+NFS ë§ˆìš´íŠ¸ í•´ì œ
 ~$sudo umount /mnt/lect_nfs
 
-¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ
-¶óÁîº£¸®ÆÄÀÌ
-cd /mnt/ ¾È¿¡ sudo vi mount.sh¾È¿¡
+ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡
+ë¼ì¦ˆë² ë¦¬íŒŒì´
+cd /mnt/ ì•ˆì— sudo vi mount.shì•ˆì—
 
 #!/bin/bash
-SERVIP=10.10.14.28                     #xx : ÀÚ±â²¨ ubuntu IP
+SERVIP=10.10.14.28                     #xx : ìê¸°êº¼ ubuntu IP
 if ! df | grep ubuntu_nfs > /dev/null ; then
         ping -c 1 $SERVIP > /dev/null
         if [ $? -eq 0 ] ; then
@@ -66,7 +66,7 @@ if ! df | grep ubuntu_nfs > /dev/null ; then
 fi
 
 ============
-ubuntu cd /mnt/ ¾È¿¡ vi mount.sh¿¡
+ubuntu cd /mnt/ ì•ˆì— vi mount.shì—
 
 #!/bin/bash
 SERVIP=10.10.14.40                      #xx : ubuntu host ip
@@ -79,17 +79,14 @@ if ! df | grep lect_nfs > /dev/null ; then
 fi
 ============
 
-¶óÁîº£¸®¿Í ubuntu home¿¡¼­ vi .profile¿¡ ¸Ç ¸¶Áö¸·¿¡
+ë¼ì¦ˆë² ë¦¬ì™€ ubuntu homeì—ì„œ vi .profileì— ë§¨ ë§ˆì§€ë§‰ì—
 if [ -f "/mnt/mount.sh" ] ; then
         . /mnt/mount.sh
 fi
 ============
 
-À§¿¡²¨ ´Ù ÇÏ°í
+ìœ„ì—êº¼ ë‹¤ í•˜ê³ 
 vi /etc/sudoers.d/01_ubuntu_nopasswd
-¿ä°Å Ä£´ÙÀ½
+ìš”ê±° ì¹œë‹¤ìŒ
 ubuntu ALL=(ALL) NOPASSWD: ALL
-ÀÌ°Å ÀúÀå
-
-
-
+ì´ê±° ì €ì¥

@@ -18,8 +18,7 @@
     - [버튼으로 LAMP ON/OFF](#버튼으로-lamp-onoff)
     - [Background 색상 적용](#background-색상-적용)
 5. [Tab4](#tab4)
-6. [Tab5]
-7. [Tab6](#tab6)
+7. [Tab5](#tab5)
 ### 예제1
 #### HelloWorld 출력
 ```cpp
@@ -942,8 +941,8 @@ class Tab4ChartPlot;
 }
 ```
 
-## **Tab6**
-### 웹사이트
+## **Tab5**
+### 웹사이트 카메라
 
 - TestWebview.pro
 ```cpp
