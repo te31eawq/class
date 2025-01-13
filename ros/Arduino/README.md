@@ -74,3 +74,65 @@ $ rosrun ros_serial_topic ros_serial_uno
 ```
 ### [예제](../../Arduino/examples/ros_serial_arduino/)
 ---
+
+
+## bot3gpio
+```
+1.ubuntu에서 ros service server와 client 작성 및 테스트 
+/home/ubuntu/catkin_ws/src/bot3_kccistc_service
+
+2. 저장 경로 ~/Arduino 디렉토리 저장
+```
+rbot3_gpio_server.ino 작성
+```arduino
+#include <ros.h>
+#include <std_msgs/String.h>
+#include "bot3gpio.h"
+
+ros::NodeHandle nh;
+using bot3_kccistc_service::bot3gpio;
+int i = 0;
+void callback(const bot3gpio::Request & req, bot3gpio::Response & res){
+  res.result = req.a + req.b;
+  Serial.print("req.a : ");
+  Serial.print(req.a);
+  Serial.print(", req.b : ");
+  Serial.print(req.b);
+  Serial.print(", res.result : ");
+  Serial.print(res.result);
+}
+ros::ServiceServer<bot3gpio::Request, bot3gpio::Response> gpio_server("bot3gpio",&callback);
+void setup() {
+  Serial.begin(115200);
+  nh.initNode();
+  nh.advertiseService(gpio_server);
+}
+void loop() {
+  nh.spinOnce();
+  delay(1000);
+}
+```
+```
+3. 스케치 빌드시 아래 오류 발생
+Compilation error: bot3gpio.h: No such file or directory
+
+기존 리눅스 service 패키지 파일의 bot3gpio.h 생성
+ubuntu@ubuntu08:~/Arduino$ mkdir libraries
+ubuntu@ubuntu08:~/Arduino$ cd libraries
+ubuntu@ubuntu08:~/Arduino/libraries$ rosrun rosserial_arduino make_libraries.py .
+ubuntu@ubuntu08:~/Arduino/libraries$ cd ros_lib
+ubuntu@ubuntu08:~/Arduino/libraries/ros_lib$ ls bot3_kccistc_service
+bot3gpio.h
+
+생성된 bot3gpio.h 파일을 아두이노 프로젝트 디렉토리로 이동
+ubuntu@ubuntu08:~/Arduino/libraries/ros_lib$ mv bot3_kccistc_service/bot3gpio.h ~/Arduino/bot3_gpio_server
+
+ubuntu@ubuntu08:~/Arduino $ rm -rf ros_lib/
+
+
+4. 아두이노 시리얼 작동
+5. ubuntu 로스시리얼 서버를 실행
+  ubuntu에 usb 시리얼 장치 추가 후
+$ rosrun rosserial_python serial_node.py __name:=arduino _port:=/dev/ttyACM0 _baud:=57600
+
+6. rqt로 통신 확인
