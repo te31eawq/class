@@ -112,6 +112,7 @@ void loop() {
   delay(1000);
 }
 ```
+---
 ```
 3. 스케치 빌드시 아래 오류 발생
 Compilation error: bot3gpio.h: No such file or directory
