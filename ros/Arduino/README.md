@@ -137,3 +137,47 @@ ubuntu@ubuntu08:~/Arduino $ rm -rf ros_lib/
 $ rosrun rosserial_python serial_node.py __name:=arduino _port:=/dev/ttyACM0 _baud:=57600
 
 6. rqt로 통신 확인
+```
+
+## Window Aruino
+turtlebot3_core 예제 사용
+
+
+- turtlebot3_core.ino 파일에
+  ```Arduino
+  nh.advertiseService(gpio_server); //for kccistc
+
+  void gpioCallback(const bot3gpio::Request & req, bot3gpio::Response & res){
+    res.result = req.a + req.b;
+  } // 추가
+  ```
+
+- turtlebot3_core_config.h 파일에
+  ```Arduino
+  #include "bot3gpio.h" //for kccistc
+  using bot3_kccistc_service::bot3gpio; //for kccistc
+
+  void gpioCallback(const bot3gpio::Request & req, bot3gpio::Response & res); //for kccistc
+
+  ros::ServiceServer<bot3gpio::Request, bot3gpio::Response> gpio_server("bot3_gpio_srv",&gpioCallback); //for kccistc
+  ```
+
+  ## ROS 소켓
+
+  ```
+  1. ubuntu에서
+  $ roscore
+
+  2. turtlebot에서 
+  $ ./bringup.sh
+
+  3. ubuntu에서
+
+  $ ./iot_server 5000
+
+  $ rosrun bot3_kccistc_service gpio_sockettoros 10.10.14.28 5000 CJW_ROS
+
+  4. 실행 명령어
+  [CJW_ROS]ACTION@0.27@0.15@0.99
+  [CJW_ROS]ACTION@5.1@-0.01@0.15
+  [CJW_ROS]TURTLE
