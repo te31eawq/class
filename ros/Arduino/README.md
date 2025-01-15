@@ -178,6 +178,47 @@ turtlebot3_core 예제 사용
   $ rosrun bot3_kccistc_service gpio_sockettoros 10.10.14.28 5000 CJW_ROS
 
   4. 실행 명령어
-  [CJW_ROS]ACTION@0.27@0.15@0.99
+  [CJW_ROS]ACTION@0.27@0.15@0.99 초기위치
   [CJW_ROS]ACTION@5.1@-0.01@0.15
   [CJW_ROS]TURTLE
+  ```
+  #### bot3_kccistc_service/src에서 vi gpio_socketToROS에서
+  ```
+  strcat(name_msg, "[ALLMSG]TURTLEGO\n");
+
+  이걸 활용하기 위해서
+  ->
+  
+  sprintf(msg, "[%s]TURTLEGO\n",pArray[0]); 로 ALLMSG가 아닌 피드백을 구현
+  ```
+
+  #### turtlebot에서
+  ```
+  sudo apt install ros-noetic-move-base-msgs
+  ```
+  ```
+  1.터틀봇 소스 패키지 설치(필요시) - rasberry pi
+  ------------------------------------
+  # workspace의 src 폴더로 이동
+  $ cd:~/catkin_ws/src
+  빌드 필요 패키지 설치
+  $sudo apt install ros-noetic-urdf-geometry-parser  ros-noetic-interactive-markers ros-noetic-xacro
+  소스 다운로드
+  기존 turtlebot3 디렉토리 삭제 후 다운로드
+  $ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
+  빌드
+  $ cm
+  $roslaunch turtlebot3_bringup turtlebot3_robot.launch
+
+
+  2.LDS driver 설치
+  $ git clone https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
+  $ cd ~/catkin_ws/src/hls_lfcd_lds_driver/applications/lds_driver
+  lds_driver$ make
+  lds_driver$ ./lds_driver
+
+  LDS publisher 실행
+  $ roslaunch hls_lfcd_lds_driver hlds_laser.launch
+  ```
+
+  
