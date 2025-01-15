@@ -205,20 +205,48 @@ turtlebot3_core 예제 사용
   $sudo apt install ros-noetic-urdf-geometry-parser  ros-noetic-interactive-markers ros-noetic-xacro
   소스 다운로드
   기존 turtlebot3 디렉토리 삭제 후 다운로드
-  $ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
+  $ git clone -b noetic https://github.com/ROBOTIS-GIT/turtlebot3.git
   빌드
   $ cm
   $roslaunch turtlebot3_bringup turtlebot3_robot.launch
 
 
   2.LDS driver 설치
-  $ git clone https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
+  $ 다운로드 https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver/tree/noetic-devel
+  $ git clone -b noetic https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
   $ cd ~/catkin_ws/src/hls_lfcd_lds_driver/applications/lds_driver
   lds_driver$ make
   lds_driver$ ./lds_driver
+  
+  vi .bashrc
+  export LDS_MODEL=LDS-01
 
   LDS publisher 실행
   $ roslaunch hls_lfcd_lds_driver hlds_laser.launch
   ```
 
-  
+  #### 라이다 이용(turtlebot)
+  ```
+  $ sudo apt-get install ros-kinetic-hls-lfcd-lds-driver
+  $ sudo chmod a+rw /dev/ttyUSB0
+
+  (ubuntu에서 roscore 실행)
+
+  $ roslaunch hls_lfcd_lds_driver hlds_laser.launch
+  $ roslaunch hls_lfcd_lds_driver view_hlds_laser.launch
+
+  ubuntu rqt에서 Topic = /scan, type = sensor_msgs/LaserScan 값들 확인
+
+  이후
+
+  ubuntu $ rospack find sensor_msgs
+  /opt/ros/noetic/share/sensor_msgs/
+
+  $ vi /opt/ros/noetic/share/sensor_msgs/msgs/LaserScan.msg
+
+  $ rospack find std_msgs
+  /opt/ros/noetic/share/std_msgs
+
+  $ vi /opt/ros/noetic/share/std_msgs/msgs/Header.msg
+  ```
+
